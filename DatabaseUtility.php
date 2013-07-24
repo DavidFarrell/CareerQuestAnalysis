@@ -167,7 +167,6 @@ and pre_col = '".$id."'
 		
 		
 		$sql = "select * from pre_post_bev_analysis where subject_id = " . $subject_id . " and pre_col = '".$id."'";
-		
 		// there can be more than one question (e.g. 3 post questions for one pre question)
 		$result = mysql_query($sql);
 		while($row = mysql_fetch_array($result)) {

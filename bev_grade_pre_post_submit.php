@@ -1,4 +1,23 @@
 <?php
+
+/* this weird function is to fix a problem with question 15 - on the internet server (PHP 5.3.13) but NOT my server (5.4.4) post vars were disappearing. 
+ * No obvious reason.
+ * Internet suggests PHP mungs certain chracters like commas to prevent old issues with globals and suggested parsing raw input yourself basically.
+ * It fixed the problem.
+*/
+function getRealPOST() {
+    $pairs = explode("&", file_get_contents("php://input"));
+    $vars = array();
+    foreach ($pairs as $pair) {
+        $nv = explode("=", $pair);
+        $name = urldecode($nv[0]);
+        $value = urldecode($nv[1]);
+        $vars[$name] = $value;
+    }
+    return $vars;
+}
+$_POST = getRealPOST();	
+
 require_once("DatabaseUtility.php");
 $db = new DatabaseUtility();
 
